@@ -57,10 +57,25 @@ if username in users:
         print("Wrong password, terminating the program..")
         exit()
 
-# text choice and word count
+# text choice
 
-choice_of_text = int(input(f"Enter a number between 1 and {number_of_texts} to select: "))
-selected_text = TEXTS[choice_of_text - 1].replace(",", "").replace(".","")
+choice_of_text = input(f"Enter a number between 1 and {number_of_texts} to select: ")
+
+# Check if the input is a number and is within the range
+
+if choice_of_text.isdigit():
+    choice_of_text = int(choice_of_text)
+    if choice_of_text < 1 or choice_of_text > number_of_texts:
+        print(f"Invalid choice, terminating the program..")
+        exit()
+else:
+    print(f"Invalid input, terminating the program..")
+    exit()
+
+# Text selection, cleaning the text from dots and commas, and word count
+
+selected_text = TEXTS[choice_of_text - 1]
+
 words = selected_text.split()
 
 print(f"{'-' * 50}\nThere are {len(words)} words in the selected text.")
@@ -93,7 +108,7 @@ print(f"The sum of all the numbers is {sum(numbers_in_text)}\n{'-' * 50}")
 character_counter = {}
 
 for word in words:
-    # if not word.isdigit(): - I wouldn't count numbers as words/characters but the example did.
+    word = word.strip(",.")
     length = len(word)
     if length in character_counter:
         character_counter[length] += 1
